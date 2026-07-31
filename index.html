@@ -81,7 +81,6 @@
   .wrap{max-width:1140px; margin:0 auto; padding:0 32px;}
   :focus-visible{outline:2px solid var(--pink-deep); outline-offset:3px;}
 
-  /* ---------- header ---------- */
   header{
     position:sticky; top:0; z-index:50;
     background:rgba(251,246,239,0.9);
@@ -112,7 +111,6 @@
   .nav-cta:hover{background:var(--pink-deep);}
   .burger{display:none;}
 
-  /* ---------- hero ---------- */
   .hero{
     position:relative; padding:88px 32px 110px; overflow:hidden;
     display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center;
@@ -148,7 +146,6 @@
   .hero-art{position:relative; z-index:1; display:flex; justify-content:center;}
   .hero-art img{width:100%; max-width:400px;}
 
-  /* ---------- section shared ---------- */
   section{padding:90px 0;}
   .section-head{text-align:center; max-width:560px; margin:0 auto 56px;}
   .section-head h2{font-size:clamp(1.8rem,3.4vw,2.5rem); margin-top:10px;}
@@ -157,7 +154,6 @@
     width:64px; height:1px; background:var(--pink); margin:0 auto 90px; opacity:0.5;
   }
 
-  /* ---------- category chips ---------- */
   .chips{
     display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:64px;
   }
@@ -170,7 +166,6 @@
     background:var(--pink); border-color:var(--pink); color:#fff;
   }
 
-  /* ---------- product grid ---------- */
   .grid{
     display:grid; grid-template-columns:repeat(4,1fr); gap:26px;
   }
@@ -193,7 +188,6 @@
     text-transform:uppercase; color:var(--pink-deep); font-weight:500;
   }
 
-  /* ---------- custom order banner ---------- */
   .custom{
     background:var(--brown); color:var(--ivory); border-radius:28px;
     padding:64px 48px; text-align:center; position:relative; overflow:hidden;
@@ -209,13 +203,11 @@
   .custom h2{font-size:clamp(1.8rem,3.2vw,2.4rem); margin:14px 0 18px; color:#fff;}
   .custom p{max-width:480px; margin:0 auto 30px; color:#E7D9CE; line-height:1.7; font-size:0.98rem;}
 
-  /* ---------- gallery placeholder note ---------- */
   .note{
     max-width:640px; margin:26px auto 0; text-align:center; font-size:0.8rem;
     color:var(--brown-soft); font-style:italic;
   }
 
-  /* ---------- footer ---------- */
   footer{
     background:var(--ivory-deep); border-top:1px solid var(--line); padding:56px 0 28px;
   }
@@ -252,11 +244,116 @@
   }
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
-    *{transition:none !important;}
+    *{transition:none !important; animation:none !important;}
   }
+
+  .grain{
+    position:fixed; inset:0; z-index:9998; pointer-events:none;
+    opacity:0.035; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  #preloader{
+    position:fixed; inset:0; z-index:9999;
+    background:var(--ivory);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+    transition:opacity 1s ease, visibility 1s ease;
+  }
+  #preloader.hide{opacity:0; visibility:hidden;}
+
+  .ink-wrap{display:flex; align-items:center; justify-content:center;}
+  .ink-wrap svg{width:120px; height:120px; overflow:visible;}
+  .ink-word{
+    font-family:'Fraunces', serif; font-style:italic; color:var(--brown-soft);
+    font-size:1.05rem; letter-spacing:0.02em; opacity:0;
+    animation:inkWordIn .8s ease forwards; animation-delay:1.5s;
+  }
+  .ink-path{
+    fill:none; stroke:var(--pink); stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:340; stroke-dashoffset:340;
+    animation:drawIn 1.6s cubic-bezier(.65,0,.35,1) forwards;
+  }
+  .ink-path.p2{animation-delay:.15s;}
+  .ink-path.p3{animation-delay:.3s; stroke:var(--brown-soft);}
+  @keyframes drawIn{to{stroke-dashoffset:0;}}
+  @keyframes inkWordIn{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .hero-in{
+    opacity:0; transform:translateY(26px); filter:blur(9px);
+    transition:opacity 1s cubic-bezier(.22,1,.36,1), transform 1s cubic-bezier(.22,1,.36,1), filter 1s cubic-bezier(.22,1,.36,1);
+    transition-delay:calc(var(--d) * 0.15s + 1.3s);
+  }
+  body.loaded .hero-in{opacity:1; transform:translateY(0); filter:blur(0);}
+
+  .petal{
+    position:absolute; top:-40px; z-index:1; pointer-events:none;
+    opacity:0.5; animation:petalFall linear infinite;
+  }
+  .petal svg{width:100%; height:100%; display:block;}
+  @keyframes petalFall{
+    0%{transform:translateY(-10%) translateX(0) rotate(0deg); opacity:0;}
+    10%{opacity:0.55;}
+    90%{opacity:0.4;}
+    100%{transform:translateY(620px) translateX(40px) rotate(220deg); opacity:0;}
+  }
+
+  .card{ will-change:transform; transform-style:preserve-3d; }
+
+  .marquee{
+    overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--pink-pale); padding:13px 0;
+  }
+  .marquee-track{
+    display:flex; width:max-content; gap:0;
+    animation:marqueeScroll 28s linear infinite;
+  }
+  .marquee-track span{
+    font-size:0.74rem; letter-spacing:0.24em; text-transform:uppercase;
+    color:var(--pink-deep); font-weight:500; white-space:nowrap; padding:0 28px;
+    display:inline-flex; align-items:center; gap:28px;
+  }
+  .marquee-track span::after{content:'✦'; color:var(--brown-soft); font-size:0.6rem;}
+  @keyframes marqueeScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  .section-divider{
+    display:flex; justify-content:center; padding:0;
+  }
+  .section-divider span{
+    width:64px; height:1px; background:var(--pink);
+    transform:scaleX(0); transition:transform 1s cubic-bezier(.22,1,.36,1);
+  }
+  .section-divider.is-visible span{transform:scaleX(1);}
+
+  .magnetic{transition:transform .35s cubic-bezier(.22,1,.36,1);}
+
+  .reveal{
+    opacity:0; transform:translateY(28px);
+    transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.is-visible{opacity:1; transform:translateY(0);}
+  .grid .card.reveal{transition-delay:var(--rd, 0s);}
 </style>
 </head>
 <body>
+
+<div class="grain"></div>
+
+<div id="preloader">
+  <div class="ink-wrap">
+    <svg viewBox="0 0 100 100">
+      <path class="ink-path p1" d="M50 30 C40 20 25 25 25 40 C25 55 40 60 50 50"/>
+      <path class="ink-path p2" d="M50 30 C60 20 75 25 75 40 C75 55 60 60 50 50"/>
+      <path class="ink-path p3" d="M35 60 L65 60 L60 78 L40 78 Z"/>
+    </svg>
+  </div>
+  <span class="ink-word">Crafted Sweets With Love</span>
+</div>
 
 <header>
   <div class="nav">
@@ -277,29 +374,59 @@
 <section class="hero">
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
+
+  <div class="petal" style="left:8%; width:20px; height:20px; animation-duration:11s; animation-delay:0s;">
+    <svg viewBox="0 0 20 20"><path d="M10 2 C4 5 4 13 10 18 C16 13 16 5 10 2 Z" fill="#E0568C"/></svg>
+  </div>
+  <div class="petal" style="left:22%; width:14px; height:14px; animation-duration:9s; animation-delay:2.5s;">
+    <svg viewBox="0 0 20 20"><path d="M10 2 C4 5 4 13 10 18 C16 13 16 5 10 2 Z" fill="#E0568C"/></svg>
+  </div>
+  <div class="petal" style="left:68%; width:18px; height:18px; animation-duration:13s; animation-delay:1s;">
+    <svg viewBox="0 0 20 20"><path d="M10 2 C4 5 4 13 10 18 C16 13 16 5 10 2 Z" fill="#E0568C"/></svg>
+  </div>
+  <div class="petal" style="left:82%; width:12px; height:12px; animation-duration:10s; animation-delay:4s;">
+    <svg viewBox="0 0 20 20"><path d="M10 2 C4 5 4 13 10 18 C16 13 16 5 10 2 Z" fill="#E0568C"/></svg>
+  </div>
+  <div class="petal" style="left:50%; width:16px; height:16px; animation-duration:12s; animation-delay:6s;">
+    <svg viewBox="0 0 20 20"><path d="M10 2 C4 5 4 13 10 18 C16 13 16 5 10 2 Z" fill="#E0568C"/></svg>
+  </div>
+
   <div class="hero-text">
-    <p class="eyebrow">Pâtisserie artisanale</p>
-    <h1>Des douceurs <em>faites main</em>,<br>pensées avec amour</h1>
-    <p>Gâteaux, macarons, cookies et créations sur mesure : chaque pièce de Nour's Pastry est préparée à la main, avec des ingrédients choisis et beaucoup de soin.</p>
-    <div class="btn-row">
-      <a href="#creations" class="btn-primary">Voir nos créations</a>
+    <p class="eyebrow hero-in" style="--d:0">Pâtisserie artisanale</p>
+    <h1 class="hero-in" style="--d:1">Des douceurs <em>faites main</em>,<br>pensées avec amour</h1>
+    <p class="hero-in" style="--d:2">Gâteaux, macarons, cookies et créations sur mesure : chaque pièce de Nour's Pastry est préparée à la main, avec des ingrédients choisis et beaucoup de soin.</p>
+    <div class="btn-row hero-in" style="--d:3">
+      <a href="#creations" class="btn-primary magnetic" id="magneticBtn">Voir nos créations</a>
       <a href="#sur-mesure" class="btn-ghost">Commande sur mesure</a>
     </div>
   </div>
-  <div class="hero-art">
+  <div class="hero-art hero-in" style="--d:1.5">
     <img src="logo.png" alt="">
   </div>
 </section>
 
+<div class="marquee">
+  <div class="marquee-track">
+    <span>-15% sur ta première commande avec le code NOUR15</span>
+    <span>Crafted Sweets With Love</span>
+    <span>-15% sur ta première commande avec le code NOUR15</span>
+    <span>Fait main avec amour</span>
+    <span>-15% sur ta première commande avec le code NOUR15</span>
+    <span>Crafted Sweets With Love</span>
+    <span>-15% sur ta première commande avec le code NOUR15</span>
+    <span>Fait main avec amour</span>
+  </div>
+</div>
+
 <section id="creations">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">À la carte</p>
       <h2>Nos créations</h2>
       <p>Un aperçu de nos gammes — les photos de chaque gourmandise arrivent très bientôt.</p>
     </div>
 
-    <div class="chips">
+    <div class="chips reveal">
       <span class="chip active">Gâteaux</span>
       <span class="chip">Macarons</span>
       <span class="chip">Brownies</span>
@@ -312,7 +439,7 @@
 
     <div class="grid">
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 30 L32 12 L50 30 Z"/>
@@ -326,7 +453,7 @@
         <span class="tag">Photos bientôt</span>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <ellipse cx="32" cy="24" rx="14" ry="7"/>
@@ -340,7 +467,7 @@
         <span class="tag">Photos bientôt</span>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <rect x="14" y="18" width="36" height="28" rx="3"/>
@@ -353,7 +480,7 @@
         <span class="tag">Photos bientôt</span>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 30 L44 30 L40 52 L24 52 Z"/>
@@ -366,7 +493,7 @@
         <span class="tag">Photos bientôt</span>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <rect x="22" y="14" width="20" height="26" rx="6"/>
@@ -379,7 +506,7 @@
         <span class="tag">Photos bientôt</span>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 26 L44 26 L41 48 Q32 52 23 48 Z"/>
@@ -392,7 +519,7 @@
         <span class="tag">Photos bientôt</span>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 34 Q32 14 50 34 Q32 26 14 34 Z"/>
@@ -405,7 +532,7 @@
         <span class="tag">Photos bientôt</span>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="32" cy="32" r="16"/>
@@ -420,7 +547,7 @@
         <span class="tag">Photos bientôt</span>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M32 12 C20 20 16 30 20 38 C24 46 40 46 44 38 C48 30 44 20 32 12 Z"/>
@@ -434,13 +561,15 @@
 
     </div>
 
-    <p class="note">Les visuels ci-dessus sont des illustrations de la maison, en attendant les photos de vos créations — remplace-les dès que tu as tes clichés produits.</p>
+    <p class="note reveal">Les visuels ci-dessus sont des illustrations de la maison, en attendant les photos de vos créations — remplace-les dès que tu as tes clichés produits.</p>
   </div>
 </section>
 
+<div class="section-divider reveal"><span></span></div>
+
 <section id="sur-mesure">
   <div class="wrap">
-    <div class="custom">
+    <div class="custom reveal">
       <p class="eyebrow">Sur commande</p>
       <h2>Un événement, une pâtisserie unique</h2>
       <p>Anniversaire, mariage, baby shower ou simple envie de gourmandise : décris-nous ton idée et Nour's Pastry la façonne pour toi, avec les couleurs, saveurs et quantités qu'il te faut.</p>
@@ -449,16 +578,18 @@
   </div>
 </section>
 
+<div class="section-divider reveal"><span></span></div>
+
 <section id="collaboration">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Partenariats</p>
       <h2>Collaborer avec Nour's Pastry</h2>
       <p>Restaurant, café, boutique ou marque événementielle : on adore construire des collaborations gourmandes. Voici comment on peut travailler ensemble.</p>
     </div>
 
     <div class="grid collab-grid">
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 32 L24 32 L30 26 L36 38 L40 30 L50 30"/>
@@ -470,7 +601,7 @@
         <p>Fourniture régulière de desserts pour ta carte, ou création d'une gamme exclusive à ton nom.</p>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 44 L20 26 L32 16 L44 26 L44 44 Z"/>
@@ -481,7 +612,7 @@
         <p>Mariages, ouvertures de boutique, événements d'entreprise : des créations à ton image, en co-branding.</p>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-badge">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E0568C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M16 26 L34 18 L34 46 L16 38 Z"/>
@@ -500,12 +631,15 @@
   </div>
 </section>
 
+<div class="section-divider reveal"><span></span></div>
+
 <section id="contact">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Nous trouver</p>
       <h2>Passer commande</h2>
       <p>Basé à Tanger. Le plus simple est de nous écrire directement — on répond avec plaisir pour parler saveurs, quantités et délais.</p>
+      <p style="font-size:0.85rem; color:var(--pink-deep); margin-top:-14px; font-weight:500;">Mentionne le code <strong>NOUR15</strong> sur WhatsApp pour -15% sur ta première commande.</p>
       <div class="btn-row" style="justify-content:center; margin-top:8px;">
         <a href="https://wa.me/212668765066" target="_blank" rel="noopener" class="btn-primary">WhatsApp : +212 668 765 066</a>
         <a href="https://instagram.com/nours.pastry" target="_blank" rel="noopener" class="btn-ghost">@nours.pastry sur Instagram</a>
@@ -559,6 +693,77 @@
 </footer>
 
 <script>
+  // ---- preloader (fondu élégant) ----
+  const preloader = document.getElementById('preloader');
+  window.addEventListener('load', () => {
+    const minDelay = 2000; // laisse le temps au dessin à l'encre de se terminer
+    const start = Date.now();
+    const finish = () => {
+      const elapsed = Date.now() - start;
+      const wait = Math.max(0, minDelay - elapsed);
+      setTimeout(() => {
+        preloader.classList.add('hide');
+        document.body.classList.add('loaded');
+      }, wait);
+    };
+    finish();
+  });
+  // fallback in case 'load' is slow/blocked (e.g. slow fonts)
+  setTimeout(() => {
+    preloader.classList.add('hide');
+    document.body.classList.add('loaded');
+  }, 3500);
+
+  // ---- 3D tilt on product / collab cards ----
+  const isTouch = window.matchMedia('(hover: none)').matches;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!isTouch && !reducedMotion){
+    document.querySelectorAll('.card').forEach(card=>{
+      card.addEventListener('mousemove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(700px) rotateY(${x*10}deg) rotateX(${-y*10}deg) translateY(-6px)`;
+      });
+      card.addEventListener('mouseleave', ()=>{
+        card.style.transform = '';
+      });
+    });
+
+    // ---- magnetic button ----
+    const magBtn = document.getElementById('magneticBtn');
+    if(magBtn){
+      magBtn.addEventListener('mousemove', (e)=>{
+        const r = magBtn.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        magBtn.style.transform = `translate(${x*16}px, ${y*16}px)`;
+      });
+      magBtn.addEventListener('mouseleave', ()=>{
+        magBtn.style.transform = '';
+      });
+    }
+  }
+
+  // ---- staggered delay for product/collab cards ----
+  document.querySelectorAll('.grid').forEach(grid=>{
+    Array.from(grid.querySelectorAll('.card')).forEach((card, i)=>{
+      card.style.setProperty('--rd', (i % 4) * 0.08 + 's');
+    });
+  });
+
+  // ---- scroll reveal ----
+  const revealObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+
+  document.querySelectorAll('.reveal').forEach(el=> revealObserver.observe(el));
+
   document.querySelectorAll('.chip').forEach(chip=>{
     chip.addEventListener('click', ()=>{
       document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
